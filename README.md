@@ -2,10 +2,12 @@
 
 [![GitHub](https://img.shields.io/github/license/xezard/XRulesPunishments)](https://github.com/Xezard/XRulesPunishments/blob/master/LICENSE) [![](https://jitpack.io/v/Xezard/XRulesPunishments.svg)](https://jitpack.io/#Xezard/XRulesPunishments)
 
-XRulesPunishments is a small plugin that makes it easy to punish players by rules.
+XRulesPunishments is a small plugin that makes it easy to punish players by predefined rules.
 
 * Supported Java version: 8+
 * Tested on spigot and bungeecord 1.16+ version.
+
+> IMPORTANT! This plugin uses [XConfiguration](https://github.com/Xezard/XConfiguration) to work with configurations.
 
 ## Getting started
 
