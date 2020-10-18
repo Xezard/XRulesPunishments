@@ -19,10 +19,10 @@
 package ru.xezard.rules.punishments.proxy.commands;
 
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import ru.xezard.rules.punishments.configurations.MessagesConfiguration;
 import ru.xezard.rules.punishments.data.IPunishmentsManager;
 import ru.xezard.rules.punishments.data.rule.Rule;
@@ -137,9 +137,9 @@ extends Command
             return;
         }
 
-        Player target = Bukkit.getPlayerExact(targetName);
+        ProxiedPlayer target = ProxyServer.getInstance().getPlayer(targetName);
 
-        if ((target == null || !target.isOnline()) && !rule.isCanBeExecutedOnOfflineTarget())
+        if (target == null && !rule.isCanBeExecutedOnOfflineTarget())
         {
             Chat.message(sender,
                     this.messagesConfiguration.getPlayerNotOnlineAndRuleCantBeExecutedOnOfflineTarget()
@@ -151,7 +151,12 @@ extends Command
             return;
         }
 
-        this.punishmentsManager.punish(rule, targetName);
+        this.punishmentsManager.punish
+        (
+                rule,
+                sender instanceof ProxiedPlayer ? sender.getName() : "console",
+                targetName
+        );
     }
 
     private void reload(CommandSender sender)

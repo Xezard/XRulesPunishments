@@ -139,7 +139,12 @@ implements CommandExecutor
             return;
         }
 
-        this.punishmentsManager.punish(rule, targetName);
+        this.punishmentsManager.punish
+        (
+                rule,
+                sender instanceof Player ? sender.getName() : "console",
+                targetName
+        );
     }
 
     private void reload(CommandSender sender)

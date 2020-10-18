@@ -28,11 +28,14 @@ import java.util.stream.Stream;
 public enum PunishmentActionType
 {
     CONSOLE("[console]"),
-    COMMAND("[command]"),
-    MESSAGE("[message]"),
-    BROADCAST("[broadcast_message]"),
+    PUNISHED_COMMAND("[punished_command]"),
+    EXECUTOR_COMMAND("[executor_command]"),
+    PUNISHED_MESSAGE("[punished_message]"),
+    EXECUTOR_MESSAGE("[executor_message]"),
+    BROADCAST_MESSAGE("[broadcast_message]"),
     BROADCAST_SOUND("[broadcast_sound]"),
-    PLAY_SOUND("[sound]");
+    PUNISHED_PLAY_SOUND("[punished_sound]"),
+    EXECUTOR_PLAY_SOUND("[executor_sound]");
 
     @Getter
     private String identifier;

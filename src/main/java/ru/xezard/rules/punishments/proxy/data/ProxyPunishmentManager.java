@@ -18,6 +18,7 @@
  */
 package ru.xezard.rules.punishments.proxy.data;
 
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -36,7 +37,7 @@ extends AbstractPunishmentManager
     }
 
     @Override
-    public void punish(Rule rule, String playerName)
+    public void punish(Rule rule, String executorName, String playerName)
     {
         int violationLevel = this.repository.addViolation(rule, playerName);
 
@@ -51,7 +52,9 @@ extends AbstractPunishmentManager
         {
             PunishmentActionType type = action.getType();
 
-            if (type == PunishmentActionType.BROADCAST_SOUND || type == PunishmentActionType.PLAY_SOUND)
+            if (type == PunishmentActionType.BROADCAST_SOUND ||
+                type == PunishmentActionType.EXECUTOR_PLAY_SOUND ||
+                type == PunishmentActionType.PUNISHED_PLAY_SOUND)
             {
                 this.logger.warning("Can't execute '" + type.name() + "' action in rule '" +
                         rule.getIdentifier() + "', proxy does not support this action!");
@@ -60,7 +63,7 @@ extends AbstractPunishmentManager
 
             ProxiedPlayer player = ProxyServer.getInstance().getPlayer(playerName);
 
-            if (type == PunishmentActionType.MESSAGE || type == PunishmentActionType.COMMAND)
+            if (type == PunishmentActionType.PUNISHED_MESSAGE || type == PunishmentActionType.PUNISHED_COMMAND)
             {
                 if (rule.isCanBeExecutedOnOfflineTarget())
                 {
@@ -77,7 +80,21 @@ extends AbstractPunishmentManager
                 }
             }
 
-            String executable = action.getExecutable().replace("{player_name}", playerName);
+            CommandSender executor = executorName.equalsIgnoreCase("console") ?
+                    ProxyServer.getInstance().getConsole() :
+                    ProxyServer.getInstance().getPlayer(executorName);
+
+            if (executor == null)
+            {
+                // is is even possible to get here?
+                this.logger.warning("Can't execute actions because '" +
+                        executorName + "', is offline!");
+                return;
+            }
+
+            String executable = action.getExecutable()
+                    .replace("{player_name}", playerName)
+                    .replace("{executor_name}", executorName);
 
             switch (action.getType())
             {
@@ -87,17 +104,27 @@ extends AbstractPunishmentManager
                                .dispatchCommand(ProxyServer.getInstance().getConsole(), executable);
                     break;
 
-                case COMMAND:
+                case PUNISHED_COMMAND:
                     ProxyServer.getInstance()
                                .getPluginManager()
                                .dispatchCommand(player, executable);
                     break;
 
-                case MESSAGE:
+                case EXECUTOR_COMMAND:
+                    ProxyServer.getInstance()
+                               .getPluginManager()
+                               .dispatchCommand(executor, executable);
+                    break;
+
+                case PUNISHED_MESSAGE:
                     player.sendMessage(TextComponent.fromLegacyText(executable));
                     break;
 
-                case BROADCAST:
+                case EXECUTOR_MESSAGE:
+                    executor.sendMessage(TextComponent.fromLegacyText(executable));
+                    break;
+
+                case BROADCAST_MESSAGE:
                     ProxyServer.getInstance()
                                .getPlayers()
                                .forEach((p) -> p.sendMessage(TextComponent.fromLegacyText(executable)));

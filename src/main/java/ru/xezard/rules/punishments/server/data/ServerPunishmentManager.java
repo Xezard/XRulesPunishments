@@ -20,6 +20,7 @@ package ru.xezard.rules.punishments.server.data;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.xezard.rules.punishments.data.AbstractPunishmentManager;
 import ru.xezard.rules.punishments.data.action.PunishmentActionType;
@@ -36,7 +37,7 @@ extends AbstractPunishmentManager
     }
 
     @Override
-    public void punish(Rule rule, String playerName)
+    public void punish(Rule rule, String executorName, String playerName)
     {
         int violationLevel = this.repository.addViolation(rule, playerName);
 
@@ -53,9 +54,9 @@ extends AbstractPunishmentManager
 
             Player player = Bukkit.getPlayerExact(playerName);
 
-            if (type == PunishmentActionType.PLAY_SOUND ||
-                type == PunishmentActionType.MESSAGE ||
-                type == PunishmentActionType.COMMAND)
+            if (type == PunishmentActionType.PUNISHED_PLAY_SOUND ||
+                type == PunishmentActionType.PUNISHED_MESSAGE ||
+                type == PunishmentActionType.PUNISHED_COMMAND)
             {
                 if (rule.isCanBeExecutedOnOfflineTarget())
                 {
@@ -72,7 +73,21 @@ extends AbstractPunishmentManager
                 }
             }
 
-            String executable = action.getExecutable().replace("{player_name}", playerName);
+            CommandSender executor = executorName.equalsIgnoreCase("console") ?
+                    Bukkit.getConsoleSender() :
+                    Bukkit.getPlayerExact(executorName);
+
+            if (executor == null)
+            {
+                // is is even possible to get here?
+                this.logger.warning("Can't execute actions because '" +
+                        executorName + "', is offline!");
+                return;
+            }
+
+            String executable = action.getExecutable()
+                    .replace("{player_name}", playerName)
+                    .replace("{executor_name}", executorName);
 
             switch (action.getType())
             {
@@ -80,15 +95,23 @@ extends AbstractPunishmentManager
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), executable);
                     break;
 
-                case COMMAND:
+                case PUNISHED_COMMAND:
                     Bukkit.dispatchCommand(player, executable);
                     break;
 
-                case MESSAGE:
+                case EXECUTOR_COMMAND:
+                    Bukkit.dispatchCommand(executor, executable);
+                    break;
+
+                case PUNISHED_MESSAGE:
+                    executor.sendMessage(executable);
+                    break;
+
+                case EXECUTOR_MESSAGE:
                     player.sendMessage(executable);
                     break;
 
-                case BROADCAST:
+                case BROADCAST_MESSAGE:
                     Bukkit.getOnlinePlayers().forEach((p) -> p.sendMessage(executable));
                     break;
 
@@ -96,8 +119,19 @@ extends AbstractPunishmentManager
                     Bukkit.getOnlinePlayers().forEach((p) -> p.playSound(p.getLocation(), Sound.valueOf(executable), 1.0f, 1.0f));
                     break;
 
-                case PLAY_SOUND:
+                case PUNISHED_PLAY_SOUND:
                     player.playSound(player.getLocation(), Sound.valueOf(executable), 1.0f, 1.0f);
+                    break;
+
+                case EXECUTOR_PLAY_SOUND:
+                    if (!(executor instanceof Player))
+                    {
+                        return;
+                    }
+
+                    Player playerExecutor = (Player) executor;
+
+                    playerExecutor.playSound(playerExecutor.getLocation(), Sound.valueOf(executable), 1.0f, 1.0f);
                     break;
             }
         });

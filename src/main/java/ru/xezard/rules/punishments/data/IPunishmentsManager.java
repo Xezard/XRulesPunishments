@@ -30,7 +30,7 @@ public interface IPunishmentsManager
 
     Optional<Rule> getRuleByIdentifier(String identifier);
 
-    void punish(Rule rule, String playerName);
+    void punish(Rule rule, String executorName, String playerName);
 
     void loadRules(List<Rule> rules);
 }

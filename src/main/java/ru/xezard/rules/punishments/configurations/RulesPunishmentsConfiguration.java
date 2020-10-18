@@ -44,7 +44,7 @@ extends Configuration
         this.put("2", Collections.singletonList("[console] mute {player_name} 15m The second violation of rule " +
                 "1.1, you are muted for 15 minutes."));
 
-        this.put("3", Collections.singletonList("[console] mute {player_name} 15m The third violation of rule " +
+        this.put("3", Collections.singletonList("[console] ban {player_name} 15m The third violation of rule " +
                 "1.1, you are banned for 5 minutes."));
     }};
 
