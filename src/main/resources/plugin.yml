@@ -3,7 +3,7 @@ main: ru.xezard.rules.punishments.server.RulesPunishmentsPlugin
 description: Punishments according to rules for players
 author: Xezard
 website: http://xezard.ru
-version: 1.0.0
+version: 1.0.1
 api-version: 1.16
 depend: [XConfiguration]
 

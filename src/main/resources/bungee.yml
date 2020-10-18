@@ -1,5 +1,5 @@
 name: XRulesPunishments
 main: ru.xezard.rules.punishments.proxy.RulesPunishmentsPlugin
-version: 1.0.0
+version: 1.0.1
 author: Xezard
 depends: [XConfiguration]
