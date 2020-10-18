@@ -42,9 +42,9 @@ extends Command
             "--------------------- [XRulesPunishments] ---------------------",
             "'[]', '<>' - required and optional arguments",
             "",
-            "> 'rl <help>' - show help page",
-            "> 'rl reload' - reload plugin",
-            "> 'rl punish [rule] [player name] - punish the player by rule'"
+            "> 'rp <help>' - show help page",
+            "> 'rp reload' - reload plugin",
+            "> 'rp punish [rule] [player name]' - punish the player by rule"
     );
 
     private static final String CONSOLE_PLUGIN_RELOADED_MESSAGE = "[XRulesPunishments] Plugin successfully reloaded!",

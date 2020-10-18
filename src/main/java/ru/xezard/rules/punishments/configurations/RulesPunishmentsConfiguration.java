@@ -56,7 +56,8 @@ extends Configuration
             "# [message] - send message to punished player",
             "# [broadcast_message] - broadcast message to all online players",
             "# [broadcast_sound] (works only on server, not proxy) - broadcast sound to all online players",
-            "# [sound] (works only on server, not proxy) - play sound for punished player"
+            "# [sound] (works only on server, not proxy) - play sound for punished player",
+            "# Specify 'Can-be-executed-on-offline-target: true' if the rule can be executed on offline player"
     })
     private List<Rule> rules = Collections.singletonList
     (
