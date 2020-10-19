@@ -53,10 +53,14 @@ extends Configuration
     ({
             "# Supported types of actions: ",
             "# [console] - execute command from console",
-            "# [message] - send message to punished player",
+            "# [punished_command] - execute a command from the punished player",
+            "# [executor_command] - execute the command fromf the executor of the punishment",
+            "# [punished_message] - send a message to the punished player",
+            "# [executor_message] - send a message to the executor of the punishment",
             "# [broadcast_message] - broadcast message to all online players",
             "# [broadcast_sound] (works only on server, not proxy) - broadcast sound to all online players",
-            "# [sound] (works only on server, not proxy) - play sound for punished player",
+            "# [punished_sound] (works only on the server) - play a sound to the punished player",
+            "# [executor_sound] (works only on the server) - play sound to the executor of the punishment",
             "# Specify 'Can-be-executed-on-offline-target: true' if the rule can be executed on offline player"
     })
     private List<Rule> rules = Collections.singletonList
