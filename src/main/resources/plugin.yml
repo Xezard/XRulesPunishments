@@ -14,17 +14,17 @@ commands:
     permission: rules.punishments.commands.help
 
 permissions:
-  rules.punishments.*:
+  rules.punishments.commands.*:
     description: Gives access to all XRulesPunishments commands
     children:
-      rules.punishments.help: true
-      rules.punishments.reload: true
+      rules.punishments.commands.help: true
+      rules.punishments.commands.reload: true
       rules.punishments.commands.punish: true
       rules.punishments.commands.punish.*: true
-  rules.punishments.help:
+  rules.punishments.commands.help:
     description: Allows to use /help command
     default: op
-  rules.punishments.reload:
+  rules.punishments.commands.reload:
     description: Allows to use /reload command
     default: op
   rules.punishments.commands.punish:
