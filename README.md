@@ -1,7 +1,7 @@
 # XRulesPunishments
 
-![Java](https://img.shields.io/badge/Java-8%2B-brightgreen)]
-![Tested](https://img.shields.io/badge/Tested%20on-Spigot%20%2F%20BungeeCord%201.16%2B-informational)]
+![Java](https://img.shields.io/badge/Java-8%2B-brightgreen)
+![Tested](https://img.shields.io/badge/Tested%20on-Spigot%20%2F%20BungeeCord%201.16%2B-informational)
 [![GitHub](https://img.shields.io/github/license/xezard/XRulesPunishments)](https://github.com/Xezard/XRulesPunishments/blob/master/LICENSE) 
 [![](https://jitpack.io/v/Xezard/XRulesPunishments.svg)](https://jitpack.io/#Xezard/XRulesPunishments)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Xezard/XRulesPunishments?label=lines%20of%20code) 
