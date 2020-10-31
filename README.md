@@ -10,7 +10,7 @@
 
 XRulesPunishments is a small plugin that makes it easy to punish players by predefined rules.
 
-> IMPORTANT! This plugin uses [XConfiguration](https://github.com/Xezard/XConfiguration) to work with configurations.
+> **IMPORTANT! This plugin uses [XConfiguration](https://github.com/Xezard/XConfiguration) to work with configurations.**
 
 ## Getting started
 
